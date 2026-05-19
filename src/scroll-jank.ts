@@ -85,7 +85,7 @@ export function preventScrollJank(options: ScrollJankOptions = {}): ScrollJankCo
 	}
 
 	target.addEventListener("scroll", handleScroll, { passive: true })
-	target.addEventListener("wheel", handleWheel, { passive: true })
+	target.addEventListener("wheel", handleWheel as EventListener, { passive: true })
 	target.addEventListener("touchstart", handleTouchMove, { passive: true })
 	target.addEventListener("touchmove", handleTouchMove, { passive: true })
 
@@ -95,7 +95,7 @@ export function preventScrollJank(options: ScrollJankOptions = {}): ScrollJankCo
 		},
 		dispose() {
 			target.removeEventListener("scroll", handleScroll)
-			target.removeEventListener("wheel", handleWheel)
+			target.removeEventListener("wheel", handleWheel as EventListener)
 			target.removeEventListener("touchstart", handleTouchMove)
 			target.removeEventListener("touchmove", handleTouchMove)
 			batcher.dispose()

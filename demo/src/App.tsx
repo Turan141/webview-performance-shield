@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type CSSProperties, type RefObject } from "react"
 import {
 	adaptivePerformanceMode,
 	createFPSMonitor,
@@ -17,7 +17,7 @@ import {
 
 const PARTICLES = Array.from({ length: 32 }, (_, index) => index)
 
-function useControllers(rootRef: React.RefObject<HTMLElement>) {
+function useControllers(rootRef: RefObject<HTMLElement>) {
 	const monitorRef = useRef<FPSMonitor | null>(null)
 	const adaptiveRef = useRef<AdaptivePerformanceController | null>(null)
 
@@ -191,10 +191,12 @@ export function App() {
 							key={particle}
 							className='particle'
 							data-particle-system='true'
-							style={{
-								["--particle-index" as "--particle-index"]: String(particle),
-								["--particle-phase" as "--particle-phase"]: String(sceneTick + particle)
-							}}
+							style={
+								{
+									["--particle-index" as "--particle-index"]: String(particle),
+									["--particle-phase" as "--particle-phase"]: String(sceneTick + particle)
+								} as CSSProperties
+							}
 						/>
 					))}
 				</div>

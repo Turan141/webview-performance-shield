@@ -10,6 +10,11 @@
 		"sourceMap": true,
 		"jsx": "react-jsx",
 		"types": ["node"],
+		"paths": {
+			"webview-performance-shield": ["./src/index.ts"],
+			"webview-performance-shield/react": ["./src/react.ts"],
+			"webview-performance-shield/*": ["./src/*"]
+		},
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"skipLibCheck": true,

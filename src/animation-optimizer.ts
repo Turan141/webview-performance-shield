@@ -57,6 +57,10 @@ interface OriginalStyleState {
 	backfaceVisibility: string
 }
 
+interface CSSStyleDeclarationWithWebkitBackdropFilter extends CSSStyleDeclaration {
+	webkitBackdropFilter?: string
+}
+
 function ensureOptimizerStyles(): void {
 	if (!isBrowser || document.getElementById(STYLE_ID)) {
 		return
@@ -148,12 +152,13 @@ function captureOriginalStyle(
 		return existing
 	}
 
+	const inlineStyle = element.style as CSSStyleDeclarationWithWebkitBackdropFilter
 	const snapshot: OriginalStyleState = {
 		animationDuration: element.style.animationDuration,
 		transitionDuration: element.style.transitionDuration,
 		filter: element.style.filter,
 		backdropFilter: element.style.backdropFilter,
-		webkitBackdropFilter: element.style.webkitBackdropFilter,
+		webkitBackdropFilter: inlineStyle.webkitBackdropFilter ?? "",
 		boxShadow: element.style.boxShadow,
 		willChange: element.style.willChange,
 		transform: element.style.transform,
@@ -236,7 +241,10 @@ export function optimizeAnimations(
 
 				for (const element of allTargets) {
 					const original = captureOriginalStyle(element, originalStyles)
-					const computedStyle = computedStyles.get(element)
+					const computedStyle = computedStyles.get(element) as
+						| CSSStyleDeclarationWithWebkitBackdropFilter
+						| undefined
+					const inlineStyle = element.style as CSSStyleDeclarationWithWebkitBackdropFilter
 
 					if (!computedStyle) {
 						continue
@@ -295,15 +303,15 @@ export function optimizeAnimations(
 							computedStyle.webkitBackdropFilter !== "none"
 						) {
 							element.style.backdropFilter = "none"
-							element.style.webkitBackdropFilter = "none"
+							inlineStyle.webkitBackdropFilter = "none"
 						} else {
 							element.style.backdropFilter = original.backdropFilter
-							element.style.webkitBackdropFilter = original.webkitBackdropFilter
+							inlineStyle.webkitBackdropFilter = original.webkitBackdropFilter
 						}
 					} else {
 						element.style.filter = original.filter
 						element.style.backdropFilter = original.backdropFilter
-						element.style.webkitBackdropFilter = original.webkitBackdropFilter
+						inlineStyle.webkitBackdropFilter = original.webkitBackdropFilter
 					}
 
 					if (state.shadowQuality === "off") {

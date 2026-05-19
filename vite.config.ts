@@ -1,6 +1,9 @@
 import { resolve } from "node:path"
+import { fileURLToPath } from "node:url"
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
+
+const projectRoot = fileURLToPath(new URL(".", import.meta.url))
 
 export default defineConfig({
 	build: {
@@ -10,8 +13,8 @@ export default defineConfig({
 		emptyOutDir: true,
 		lib: {
 			entry: {
-				index: resolve(__dirname, "src/index.ts"),
-				react: resolve(__dirname, "src/react.ts")
+				index: resolve(projectRoot, "src/index.ts"),
+				react: resolve(projectRoot, "src/react.ts")
 			},
 			formats: ["es", "cjs"],
 			fileName: (format, entryName) =>
