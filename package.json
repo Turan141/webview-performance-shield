@@ -1,0 +1,77 @@
+{
+	"name": "webview-performance-shield",
+	"version": "0.1.0",
+	"description": "Invisible performance guardrails for React, WebView, and hybrid mobile apps on weak devices.",
+	"type": "module",
+	"license": "MIT",
+	"author": "",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./react": {
+			"types": "./dist/react.d.ts",
+			"import": "./dist/react.js",
+			"require": "./dist/react.cjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"sideEffects": false,
+	"engines": {
+		"node": ">=18"
+	},
+	"keywords": [
+		"performance",
+		"webview",
+		"react",
+		"fps",
+		"animation",
+		"mobile",
+		"hybrid-app",
+		"android-webview",
+		"optimization",
+		"scroll"
+	],
+	"scripts": {
+		"dev": "vite --config demo/vite.config.ts",
+		"build": "vite build && vite build --config demo/vite.config.ts",
+		"typecheck": "tsc --noEmit",
+		"preview": "vite preview --config demo/vite.config.ts",
+		"clean": "rimraf dist demo/dist",
+		"pack:check": "npm pack --dry-run"
+	},
+	"peerDependencies": {
+		"react": ">=18.2.0",
+		"react-dom": ">=18.2.0"
+	},
+	"peerDependenciesMeta": {
+		"react": {
+			"optional": true
+		},
+		"react-dom": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.0",
+		"@types/react": "^18.2.0",
+		"@types/react-dom": "^18.2.0",
+		"@vitejs/plugin-react": "^4.3.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"rimraf": "^6.0.0",
+		"typescript": "^5.6.0",
+		"vite": "^5.4.0",
+		"vite-plugin-dts": "^4.2.0"
+	}
+}
